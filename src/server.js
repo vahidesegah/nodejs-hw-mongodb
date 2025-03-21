@@ -2,7 +2,8 @@ import express from "express";
 import pinoHttp from "pino-http";
 import cors from "cors";
 import dotenv from "dotenv";
-
+import { getContacts } from "../db/services/contacts.js";
+import { getContactsById } from "../db/services/contacts.js";
 
 export function setupServer() {
 
@@ -22,6 +23,39 @@ app.use(
     }),
 );
 
+    app.get("/contacts", async (req, res) => {
+        const contacts = await getContacts();
+
+        res.status(200).send({
+            message: "Successfully found contacts!",
+            status: 200,
+            data: contacts,
+        });
+    });
+
+    app.get("/contacts/:contactId", async (req, res) => {
+        const { contactId } = req.params;
+         const contacts = await getContactsById(contactId);
+
+        if (!contact) {
+            return res.status(404).send({
+                message: "Contact not found!",
+                status: 404
+            });
+        }
+        
+        res.status(200).send({
+            message: "Successfully found contacts!",
+            status: 200,
+            data: contacts,
+        });
+
+    });
+
+
+
+
+    
 app.use((req, res, next) => {
     res.status(404).json({ message: "Not Found" });
 });
