@@ -9,10 +9,10 @@ export const initMongoConnection = async () => {
             MONGODB_PASSWORD, 
             MONGODB_URL, 
             MONGODB_DB, 
-            MONGODB_OPTIONS } = process.env.MONGODB_URI;
+            MONGODB_OPTIONS } = process.env;
 
-        const mongoDbUrl = `mongodb+srv://${MONGODB_USER}:${MONGODB_PASSWORD}@${MONGODB_URL}/${MONGODB_DB}?${MONGODB_OPTIONS}`;   
-        await mongoose.connect(mongoDbUrl);
+        const mongoDbUrI = `mongodb+srv://${MONGODB_USER}:${MONGODB_PASSWORD}@${MONGODB_URL}/${MONGODB_DB}?${MONGODB_OPTIONS}`;   
+        await mongoose.connect(mongoDbUrI);
 
         console.log("Mongo connection successfully established!");
     } catch (error) { 

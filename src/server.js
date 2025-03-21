@@ -2,16 +2,18 @@ import express from "express";
 import pinoHttp from "pino-http";
 import cors from "cors";
 import dotenv from "dotenv";
-import { getContacts } from "../db/services/contacts.js";
-import { getContactsById } from "../db/services/contacts.js";
-import contact from "../db/models/contacts.js";
+import { getContacts } from "../src/services/contacts.js";
+import { getContactsById } from "../src/services/contacts.js";
+
 
 
 export function setupServer() {
 
 dotenv.config();
 const PORT = process.env.PORT; //.env deki port u al
-const app = express();
+    const app = express();
+    const mongoUri = process.env.MONGO_URI;
+    console.log("MongoUri:", mongoUri);
 
 app.use(cors());
 
@@ -39,7 +41,7 @@ app.use(
         const { contactId } = req.params;
          const contacts = await getContactsById(contactId);
 
-        if (!contact) {
+        if (!contacts) {
             return res.status(404).send({
                 message: "Contact not found!",
                 status: 404

@@ -25,7 +25,7 @@ const contactsSchema = new Schema(
         required: true,
         default: "Personal"
     },
-    timeStamps: true
+   
 });
 
 const Contacts = model("Contacts", contactsSchema); // hangi collection ile konuşacağımı belirtiyorum
