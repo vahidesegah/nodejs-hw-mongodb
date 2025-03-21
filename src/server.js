@@ -4,6 +4,8 @@ import cors from "cors";
 import dotenv from "dotenv";
 import { getContacts } from "../db/services/contacts.js";
 import { getContactsById } from "../db/services/contacts.js";
+import contact from "../db/models/contacts.js";
+
 
 export function setupServer() {
 
@@ -51,9 +53,6 @@ app.use(
         });
 
     });
-
-
-
 
     
 app.use((req, res, next) => {
