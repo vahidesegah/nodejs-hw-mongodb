@@ -9,7 +9,7 @@ export const initMongoConnection = async () => {
             MONGODB_PASSWORD, 
             MONGODB_URL, 
             MONGODB_DB, 
-            MONGODB_OPTIONS } = process.env;
+            MONGODB_OPTIONS } = process.env.MONGODB_URI;
 
         const mongoDbUrl = `mongodb+srv://${MONGODB_USER}:${MONGODB_PASSWORD}@${MONGODB_URL}/${MONGODB_DB}?${MONGODB_OPTIONS}`;   
         await mongoose.connect(mongoDbUrl);
