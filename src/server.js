@@ -4,7 +4,6 @@ import cors from "cors";
 import dotenv from "dotenv";
 
 
-
 export function setupServer() {
 
 dotenv.config();
@@ -23,7 +22,12 @@ app.use(
     }),
 );
 
+app.use((req, res, next) => {
+    res.status(404).json({ message: "Not Found"})
+});
+
 app.listen(PORT, () => {
     console.log(`Server started on port ${PORT}`);
   });
 };
+
