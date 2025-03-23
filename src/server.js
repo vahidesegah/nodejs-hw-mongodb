@@ -9,10 +9,14 @@ import { getContactsById } from "../src/services/contacts.js";
 
 export function setupServer() {
 
-dotenv.config();
+    dotenv.config();
+    
+    const mongoUri = process.env.MONGO_URI;
+
+    
 const PORT = process.env.PORT; //.env deki port u al
     const app = express();
-    const mongoUri = process.env.MONGO_URI;
+    
     console.log("MongoUri:", mongoUri);
 
 app.use(cors());
