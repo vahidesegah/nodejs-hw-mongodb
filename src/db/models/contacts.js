@@ -1,7 +1,5 @@
 import { Schema, model } from "mongoose";
 
-
-
 const contactsSchema = new Schema(
     {
     name: {
@@ -24,8 +22,8 @@ const contactsSchema = new Schema(
         enum: ["Work", "Home", "Personal"],
         required: true,
         default: "Personal"
-    },
-   
+        },
+
 });
 
 const Contacts = model("Contacts", contactsSchema); // hangi collection ile konuşacağımı belirtiyorum
