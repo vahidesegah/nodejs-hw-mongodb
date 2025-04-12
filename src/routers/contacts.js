@@ -9,16 +9,16 @@ import { ctrlWrapper } from '../utils/ctrlWrapper.js';
 
 import { Router } from 'express';
 
-const router = Router();
+const contactsRouter = Router();
 
-router.get('/contacts', ctrlWrapper(getAllContactsController));
+contactsRouter.get('/contacts', ctrlWrapper(getAllContactsController));
 
-router.get('/contacts/:contactId', ctrlWrapper(getContactByIdController));
+contactsRouter.get('/contacts/:contactId', ctrlWrapper(getContactByIdController));
 
-router.post('/contacts', ctrlWrapper(createContactController));
+contactsRouter.post('/contacts', ctrlWrapper(createContactController));
 
-router.patch('/contacts/:contactId', ctrlWrapper(patchContactController));
+contactsRouter.patch('/contacts/:contactId', ctrlWrapper(patchContactController));
 
-router.delete('/contacts/:contactId', ctrlWrapper(deleteContactController));
+contactsRouter.delete('/contacts/:contactId', ctrlWrapper(deleteContactController));
 
-export default router;
+export default contactsRouter;
