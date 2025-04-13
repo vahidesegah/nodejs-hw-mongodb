@@ -1,53 +1,24 @@
-import { getContactsById } from "../services/contacts.js";
-import express from "express";
-import { getContacts } from "../src/services/contacts.js";
-import dotenv from "dotenv";
+import {
+  createContactController,
+  deleteContactController,
+  getAllContactsController,
+  getContactByIdController,
+  patchContactController,
+} from '../controllers/contacts.js';
+import { ctrlWrapper } from '../utils/ctrlWrapper.js';
 
+import { Router } from 'express';
 
-    dotenv.config();
-    
-    const mongoUri = process.env.MONGO_URI;
-    
-    const app = express();
-    
-    console.log("MongoUri:", mongoUri);
+const contactsRouter = Router();
 
+contactsRouter.get('/contacts', ctrlWrapper(getAllContactsController));
 
+contactsRouter.get('/contacts/:contactId', ctrlWrapper(getContactByIdController));
 
-    app.get("/contacts", async (req, res) => {
-        const contacts = await getContacts();
+contactsRouter.post('/contacts', ctrlWrapper(createContactController));
 
-        res.status(200).send({
-            message: "Successfully found contacts!",
-            status: 200,
-            data: contacts,
-        });
-    });
+contactsRouter.patch('/contacts/:contactId', ctrlWrapper(patchContactController));
 
-    app.get("/contacts/:contactId", async (req, res) => {
-        const { contactId } = req.params;
-        const contacts = await getContactsById(contactId);
+contactsRouter.delete('/contacts/:contactId', ctrlWrapper(deleteContactController));
 
-        if (!contacts) {
-            return res.status(404).send({
-                message: "Contact not found!",
-                status: 404
-            });
-        }
-        
-        res.status(200).send({
-            message: "Successfully found contacts!",
-            status: 200,
-            data: contacts,
-        });
-
-        res.status(500).send({
-            status: 500,
-            message: "Something went wrong",
-            data: error.message,
-        });
-
-
-    
-    });
-
+export default contactsRouter;
