@@ -9,4 +9,4 @@ export const validateBody = (schema) => async (req, res, next) => {
             errors: error.details.map((detail) => detail.message)
         });
     }
-}
+};
