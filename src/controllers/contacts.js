@@ -7,7 +7,7 @@ import {
 } from '../services/contacts.js';
 import createHttpError from 'http-errors';
 import { createContactSchema } from '../validators/contacts.js';
-import { parsePaginationParams } from '../utils/pagination.js';
+import { parsePaginationParams } from '../utils/parsePaginationParams.js';
 
 export const getAllContactsController = async (req, res) => {
   const queryParams = req.query;

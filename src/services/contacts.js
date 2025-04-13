@@ -5,7 +5,22 @@ export const getAllContacts = async (page, perPage) => {
   const limit = perPage;
 
   const contacts = ContactsCollection.find().skip(skip).limit(limit);
-  return contacts;
+  const totalCount = await ContactsCollection.countDocuments();
+  const totalPages = Math.ceil(totalCount / perPage);
+  const hasNextPage = page < totalPages;
+  const hasPreviousPage = page > 1;
+
+  return {
+    data: contacts,
+    pagination: {
+      currentPage: page,
+      perPage,
+      totalCount,
+      totalPages,
+      hasNextPage,
+      hasPreviousPage,
+    },
+  };
 };
 
 export const getContactById = async (contactId) => {
