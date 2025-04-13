@@ -8,13 +8,13 @@ export const SORT_ORDER = {
     DSC: `desc`,
 };
 
-export const SORT_BY = {
-    ID: `_id`,
-    name: "name",
-    phoneNumber: "phoneNumber",
-    email: "email",
-    isFavourite: "isFavorite",
-    contactType: "contactType",
-    createdAt: "createdAt",
-    updatedAt: "updatedAt",
-};
+export const SORT_BY = [
+    "id",
+    "name",
+    "phoneNumber",
+    "email",
+    "isFavorite",
+    "contactType",
+    "createdAt",
+    "updatedAt",
+];
