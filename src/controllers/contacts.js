@@ -6,6 +6,7 @@ import {
   updateContact,
 } from '../services/contacts.js';
 import createHttpError from 'http-errors';
+import { createContactSchema } from '../validators/contacts.js';
 
 export const getAllContactsController = async (req, res) => {
   const contacts = await getAllContacts();
@@ -33,7 +34,18 @@ export const getContactByIdController = async (req, res) => {
 
 export const createContactController = async (req, res) => {
   const contact = await createContact(req.body);
-
+  
+  try {
+    await createContactSchema.validateAsync(contact, {
+      abortEarly: false,
+    });
+  } catch (error) {
+    throw createHttpError(
+      400,
+      error.details.map((err) => err.message).join(`, `),
+    );
+  }  
+  
   res.status(201).json({
     status: 201,
     message: 'Successfully created a contact!',
