@@ -1,4 +1,4 @@
-export const validateBody = (schema) => async { req, res, next } => {
+export const validateBody = (schema) => async (req, res, next) => {
     try {
         await schema.validateAsync(req.body, { abortEarly: false });
         next();
@@ -6,7 +6,7 @@ export const validateBody = (schema) => async { req, res, next } => {
         res.status(400).send({
             message: "Validation error",
             status: 400,
-            errors: error.details.map((detail) => detail.message);
+            errors: error.details.map((detail) => detail.message)
         });
     }
 }
