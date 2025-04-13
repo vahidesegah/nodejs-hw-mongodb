@@ -12,7 +12,7 @@ export const getAllContacts = async (page, perPage) => {
   return {
     data: contacts,
     pagination,
-  };
+    };
   };
 
 
