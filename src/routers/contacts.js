@@ -8,6 +8,7 @@ import {
 import { ctrlWrapper } from '../utils/ctrlWrapper.js';
 import { validateBody } from "../middlewares/validatorBody.js";
 import { createContactSchema } from '../validators/contacts.js';
+import { updateContactSchema } from "../validators/contacts.js";
 
 import { Router } from 'express';
 
@@ -19,7 +20,7 @@ contactsRouter.get('/contacts/:contactId', ctrlWrapper(getContactByIdController)
 
 contactsRouter.post('/contacts', validateBody(createContactSchema), ctrlWrapper(createContactController));
 
-contactsRouter.patch('/contacts/:contactId', ctrlWrapper(patchContactController));
+contactsRouter.patch('/contacts/:contactId', validateBody(updateContactSchema), ctrlWrapper(patchContactController));
 
 contactsRouter.delete('/contacts/:contactId', ctrlWrapper(deleteContactController));
 
