@@ -5,11 +5,13 @@ import { calculatePaginationData } from "../utils/calculatePaginationData.js";
 export const getAllContacts = async ({
   page = DEFAULT_PAGINATION_VALUES.page, 
   perPage = DEFAULT_PAGINATION_VALUES.perPage,
+  sortBy = DEFAULT_PAGINATION_VALUES.sortBy,
+  sortOrder = DEFAULT_PAGINATION_VALUES.sortOrder,
 }) => {
   const skip = (page - 1) * perPage;
   const limit = perPage;
 
-  const contacts = ContactsCollection.find().skip(skip).limit(limit);
+  const contacts = ContactsCollection.find().skip(skip).limit(limit).sort({[sortBy]: sortOrder});
   const totalCount = await ContactsCollection.countDocuments();
   const pagination = calculatePaginationData(totalCount, page, perPage);
 

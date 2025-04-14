@@ -8,13 +8,18 @@ import {
 import createHttpError from 'http-errors';
 import { createContactSchema } from '../validators/contacts.js';
 import { parsePaginationParams } from '../utils/parsePaginationParams.js';
+import { parseSortParams } from "../utils/parseSortParams.js";
 
 export const getAllContactsController = async (req, res) => {
   const queryParams = req.query;
   const { page, perPage } = parsePaginationParams(queryParams);
+  const { sortBy, sortOrder } = parseSortParams(queryParams);
+
   const contacts = await getAllContacts({
     page, 
     perPage,
+    sortBy,
+    sortOrder,
   });
 
   res.status(200).json({
