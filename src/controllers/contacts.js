@@ -9,22 +9,27 @@ import createHttpError from 'http-errors';
 import { createContactSchema } from '../validators/contacts.js';
 import { parsePaginationParams } from '../utils/parsePaginationParams.js';
 import { parseSortParams } from "../utils/parseSortParams.js";
+import { parseFilterParams } from "../utils/parseFilterParams.js";
+
+
 
 export const getAllContactsController = async (req, res) => {
   const queryParams = req.query;
   const { page, perPage } = parsePaginationParams(queryParams);
   const { sortBy, sortOrder } = parseSortParams(queryParams);
+  const filter = parseFilterParams(queryParams);
 
   const contacts = await getAllContacts({
     page, 
     perPage,
     sortBy,
     sortOrder,
+    filter,
   });
 
-  res.json({
-    status: 200,
+  res.status(200).send({
     message: 'Successfully found contacts!',
+    status: 200,
     data: contacts,
   });
 };

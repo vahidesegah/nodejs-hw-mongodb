@@ -1,0 +1,36 @@
+const parseNumber = (value) => {
+    const parsedValue = Number(value);
+
+    if (isNan(parsedValue)) {
+        return null;
+    }
+    return parsedValue;
+};
+
+const parseGenderValue = (value) => {
+    const genderValues = ["female", "male", "other"];
+
+    if (genderValues.includes(value)) {
+        return value;
+    }
+    return null;
+};
+
+export const parseFilterParams = (query) => {
+    const { gender, maxAge, minAge, maxAvgMark, minAvgMark } = query;
+
+    const genderValue = parseGenderValue(gender);
+    const maxAgeValue = parseNumber(maxAge);
+    const minAgeValue = parseNumber(minAge);
+    const maxAvgMarkValue = parseNumber(maxAvgMark);
+    const minAvgMarkValue = parseNumber(minAvgMark);
+
+    return {
+        gender: genderValue,
+        maxAge: maxAgeValue,
+        minAge: minAgeValue,
+        maxAvgMark: maxAvgMarkValue,
+        minAvgMark: minAvgMarkValue,
+    };
+};
+
