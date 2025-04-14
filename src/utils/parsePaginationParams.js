@@ -1,16 +1,26 @@
 import { DEFAULT_PAGINATION_VALUES } from "../constants/pagination.js";
 
-const parseNumber = (value, defaultValue) => {
-    const parsedValue = Number(value);
-    return isNaN(parsedValue) ? defaultValue : parsedValue;
+const parseNumber = (number, defaultValue) => {
+    const isString = typeof number === "string";
+    if(!isString) return defaultValue;
+
+    const parsedNumber = parseInt(number);
+    if (Number.isNaN(parsedNumber)) {
+        return defaultValue;
+        }
+    
+    return parsedNumber;
+
 };
 
 export const parsePaginationParams = (query) => {
-    const page = parseNumber(query.page, DEFAULT_PAGINATION_VALUES.page);
-    const perPage = parseNumber(query.perPage, DEFAULT_PAGINATION_VALUES.perPage);
+    const { page, perPage } = query;
+
+    const parsedPage = parseNumber(page, DEFAULT_PAGINATION_VALUES.page);
+    const parsedPerPage = parseNumber(perPage, DEFAULT_PAGINATION_VALUES.perPage);
 
     return {
-        page,
-        perPage
+        page: parsedPage,
+        perPage: parsedPerPage,
     };
 };
