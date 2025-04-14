@@ -1,7 +1,11 @@
+import { DEFAULT_PAGINATION_VALUES } from '../constants/pagination.js';
 import { ContactsCollection } from '../models/contact.js';
 import { calculatePaginationData } from "../utils/calculatePaginationData.js";
 
-export const getAllContacts = async (page, perPage) => {
+export const getAllContacts = async ({
+  page = DEFAULT_PAGINATION_VALUES.page, 
+  perPage = DEFAULT_PAGINATION_VALUES.perPage,
+}) => {
   const skip = (page - 1) * perPage;
   const limit = perPage;
 
