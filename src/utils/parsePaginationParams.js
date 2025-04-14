@@ -1,4 +1,4 @@
-import { DEFAULT_PAGINATION_VALUES } from "../constants/pagination";
+import { DEFAULT_PAGINATION_VALUES } from "../constants/pagination.js";
 
 const parseNumber = (value, defaultValue) => {
     const parsedValue = Number(value);
