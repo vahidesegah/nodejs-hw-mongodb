@@ -1,10 +1,10 @@
 import { CONTACT_SORT_FIELDS, DEFAULT_PAGINATION_VALUES, SORT_ORDER } from "../constants/pagination.js";
 
-const parseSortOrder = (order) => {
+const parseSortOrder = (sortOrder) => {
     const knownSortOrders = [SORT_ORDER.ASC, SORT_ORDER.DESC];
 
-    if (knownSortOrders.includes(order)) {
-        return order;
+    if (knownSortOrders.includes(sortOrder)) {
+        return sortOrder;
     }
     return DEFAULT_PAGINATION_VALUES.sortOrder;
 };

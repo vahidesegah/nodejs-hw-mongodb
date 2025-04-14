@@ -1,36 +1,38 @@
-const parseNumber = (value) => {
-    const parsedValue = Number(value);
-
-    if (isNan(parsedValue)) {
-        return null;
-    }
-    return parsedValue;
+const parseType = (type) => {
+  if (typeof type !== 'string') return null;
+  const validTypes = ['personal', 'home', 'other'];
+  return validTypes.includes(type.toLowerCase()) ? type.toLowerCase() : null;
 };
 
-const parseGenderValue = (value) => {
-    const genderValues = ["female", "male", "other"];
-
-    if (genderValues.includes(value)) {
-        return value;
+  
+  const parseNumber = (number) => {
+    const isString = typeof number === 'string';
+    if (!isString) return;
+  
+    const parsedNumber = parseInt(number);
+    if (Number.isNaN(parsedNumber)) {
+      return;
     }
-    return null;
+  
+    return parsedNumber;
+  };
+  
+  const parseDate = (date) => {
+    if(typeof date !== 'string') return null;
+
+    const parsedDate = new Date(date);
+
+    return isNaN(parsedDate.getTime()) ? null : parsedDate;
 };
 
-export const parseFilterParams = (query) => {
-    const { gender, maxAge, minAge, maxAvgMark, minAvgMark } = query;
-
-    const genderValue = parseGenderValue(gender);
-    const maxAgeValue = parseNumber(maxAge);
-    const minAgeValue = parseNumber(minAge);
-    const maxAvgMarkValue = parseNumber(maxAvgMark);
-    const minAvgMarkValue = parseNumber(minAvgMark);
+  export const parseFilterParams = (query) => {
+    const { name, email, contactType, createdDate, updatedDate } = query;
 
     return {
-        gender: genderValue,
-        maxAge: maxAgeValue,
-        minAge: minAgeValue,
-        maxAvgMark: maxAvgMarkValue,
-        minAvgMark: minAvgMarkValue,
+      name: typeof name === 'string' ? name.trim() : null,
+      email: typeof email ==="string" ? email.trim() : null,
+      contactType: parseType(contactType),
+      createdDate: parseDate(createdDate),
+      updatedDate: parseDate(updatedDate),
     };
 };
-
