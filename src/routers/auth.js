@@ -8,22 +8,14 @@ import { loginUserController } from '../controllers/auth.js';
 import { logoutUserController } from '../controllers/auth.js';
 import { refreshUserSessionController } from '../controllers/auth.js';
 
+
 const router = Router();
 
-router.post(
-  '/register',
-  validateBody(registerUserSchema),
-  ctrlWrapper(registerUserController),
-);
+router.post('/register',  validateBody(registerUserSchema),  ctrlWrapper(registerUserController));
 
-router.post(
-  '/login',
-  validateBody(loginUserSchema),
-  ctrlWrapper(loginUserController),
-);
+router.post('/login',  validateBody(loginUserSchema),  ctrlWrapper(loginUserController));
 
 router.post('/logout', ctrlWrapper(logoutUserController));
-
 
 router.post('/refresh', ctrlWrapper(refreshUserSessionController));
 
