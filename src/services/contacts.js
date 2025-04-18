@@ -7,12 +7,34 @@ export const getAllContacts = async ({
   perPage = DEFAULT_PAGINATION_VALUES.perPage,
   sortBy = DEFAULT_PAGINATION_VALUES.sortBy,
   sortOrder = DEFAULT_PAGINATION_VALUES.sortOrder,
+  filter = {},
 }) => {
   const skip = (page - 1) * perPage;
   const limit = perPage;
 
-  const contacts = ContactsCollection.find().skip(skip).limit(limit).sort({[sortBy]: sortOrder});
+  const contactQuery = ContactsCollection.find();
+  if (filter.maxAge) {
+    contactQuery.where("age").lte(filter.maxAge);
+  }
+  if (filter.minAge) {
+    contactQuery.where("age").gte(filter.minAge);
+  }
+  if (filter.maxAvgMark) {
+    contactQuery.where("avgMark").lte(filter.maxAvgMark);
+  }
+  if (filter.minAvgMark) {
+    contactQuery.where("avgMark").gte(filter.minAvgMark);
+  }
+
+
   const totalCount = await ContactsCollection.countDocuments();
+
+  const contacts = await contactQuery
+    .skip(skip)
+    .limit(limit)
+    .sort({ [sortBy]: sortOrder })
+    .exec();
+  
   const pagination = calculatePaginationData(totalCount, page, perPage);
 
   return {
