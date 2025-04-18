@@ -5,6 +5,7 @@ import { env } from './env.js';
 import contactsRouter from './routers/contacts.js';
 import { notFoundHandler } from './middlewares/notFoundHandler.js';
 import { errorHandler } from './middlewares/errorHandler.js';
+import cookieParser from 'cookie-parser';
 
 
 
@@ -36,3 +37,10 @@ const PORT = Number(env('PORT', '5000'));
   });
 };
 
+export const startServer = () => {
+  const app = express();
+
+  app.use(express.json());
+  app.use(cors());
+  app.use(cookieParser());
+}
