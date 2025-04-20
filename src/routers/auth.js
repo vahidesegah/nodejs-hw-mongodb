@@ -20,4 +20,4 @@ UserRouter.post('/logout', ctrlWrapper(logoutUserController));
 UserRouter.post('/refresh', ctrlWrapper(refreshUserSessionController));
 
 
-export default router;
+export default UserRouter;
