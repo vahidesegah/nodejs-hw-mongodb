@@ -15,6 +15,7 @@ import { Router } from 'express';
 
 
 const contactsRouter = Router();
+
 contactsRouter.use(authorize()); // Apply authorize middleware to all routes in this router
 
 contactsRouter.get('/contacts', ctrlWrapper(getAllContactsController));
