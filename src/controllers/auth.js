@@ -18,6 +18,7 @@ export const registerUserController = async (req, res) => {
 export const loginUserController = async (req, res) => {
   const session = await loginUser(req.body);
 
+  // İstek atan taraf refreshtoken ve sessionId görebilecek
   res.cookie('refreshToken', session.refreshToken, {
     httpOnly: true,
     expires: new Date(Date.now() + ONE_DAY),
@@ -27,6 +28,7 @@ export const loginUserController = async (req, res) => {
     expires: new Date(Date.now() + ONE_DAY),
   });
 
+  // Kullanıcı sadece accessToken görecek
   res.json({
     status: 200,
     message: 'Successfully logged in an user!',
@@ -44,9 +46,12 @@ export const logoutUserController = async (req, res) => {
   res.clearCookie('sessionId');
   res.clearCookie('refreshToken');
 
-  res.status(204).send();
+  res.status(200).send({
+    status: 200,
+    message: "Successfully logged out!",
+  });
 };
-
+  
 const setupSession = (res, session) => {
   res.cookie('refreshToken', session.refreshToken, {
     httpOnly: true,
@@ -74,3 +79,4 @@ export const refreshUserSessionController = async (req, res) => {
     },
   });
 };
+

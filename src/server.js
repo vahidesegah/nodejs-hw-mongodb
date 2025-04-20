@@ -21,6 +21,7 @@ export const setupServer = () => {
   );
   app.use(express.json());
   app.use(cors());
+  app.use(cookieParser());
 
 const PORT = Number(env('PORT', '5000'));
 

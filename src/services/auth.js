@@ -29,8 +29,8 @@ export const loginUser = async (userData) => {
   if (!isEqual) {
     throw createHttpError(401, 'Invalid Password');
   }
-
-  await SessionsCollection.deleteOne({ userId: user._id });
+// diğer sessionlar varsa sil 
+  await SessionsCollection.deleteMany({ userId: user._id });
 
   const accessToken = randomBytes(30).toString('base64');
   const refreshToken = randomBytes(30).toString('base64');
@@ -47,7 +47,7 @@ export const loginUser = async (userData) => {
 };
 
 export const logoutUser = async (sessionId) => {
-  await SessionsCollection.deleteOne({ _id: sessionId });
+  await SessionsCollection.findByIdAndDelete({ _id: sessionId });
 };
 
 
