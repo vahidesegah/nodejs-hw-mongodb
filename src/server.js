@@ -23,6 +23,7 @@ export const setupServer = () => {
   app.use(cors());
   app.use(cookieParser());
 
+
 const PORT = Number(env('PORT', '5000'));
 
 
@@ -32,10 +33,14 @@ app.use("/auth", userAuthRouter);
  
 app.use(notFoundHandler);
 app.use(errorHandler);
-
+  
 
   app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
   });
+
+
+  
+
 };
 
