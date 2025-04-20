@@ -27,7 +27,7 @@ export const loginUser = async (userData) => {
   const isEqual = await bcrypt.compare(userData.password, user.password);
 
   if (!isEqual) {
-    throw createHttpError(401, 'Unauthorized');
+    throw createHttpError(401, 'Invalid Password');
   }
 
   await SessionsCollection.deleteOne({ userId: user._id });
