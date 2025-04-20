@@ -26,23 +26,16 @@ export const setupServer = () => {
 const PORT = Number(env('PORT', '5000'));
 
 
-  app.use("/", contactsRouter);
-  app.use("/auth", userAuthRouter);
-
-  app.use(errorHandler);
-  app.use(notFoundHandler);
-
+app.use("/contacts", contactsRouter);
+app.use("/auth", userAuthRouter);
   
+ 
+app.use(notFoundHandler);
+app.use(errorHandler);
+
 
   app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
   });
 };
 
-export const startServer = () => {
-  const app = express();
-
-  app.use(express.json());
-  app.use(cors());
-  app.use(cookieParser());
-};
