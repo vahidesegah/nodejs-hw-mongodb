@@ -10,10 +10,12 @@ import { validateBody } from "../middlewares/validateBody.js";
 import { createContactSchema } from '../validators/contacts.js';
 import { updateContactSchema } from "../validators/contacts.js";
 import { isValidId } from "../middlewares/isValidId.js";
-
+import { authorize } from '../middlewares/authorize.js';
 import { Router } from 'express';
 
+
 const contactsRouter = Router();
+contactsRouter.use(authorize());
 
 contactsRouter.get('/contacts', ctrlWrapper(getAllContactsController));
 

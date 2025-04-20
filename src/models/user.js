@@ -16,3 +16,5 @@ usersSchema.methods.toJSON = function () {
 };
 
 export const UsersCollection = model('Users', usersSchema);
+
+

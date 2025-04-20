@@ -12,3 +12,4 @@ const sessionsSchema = new Schema(
 );
 
 export const SessionsCollection = model('Sessions', sessionsSchema);
+
