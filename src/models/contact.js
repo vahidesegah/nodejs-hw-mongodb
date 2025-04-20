@@ -6,11 +6,7 @@ const contactSchema = new Schema(
       type: String,
       required: true,
     },
-    phoneNumber: {
-      type: String,
-      required: true,
-    },
-    email: {
+     email: {
       type: String,
     },
     isFavourite: {
@@ -22,9 +18,11 @@ const contactSchema = new Schema(
       enum: ['work', 'home', 'personal'],
       default: 'personal',
     },
-    parentId: { 
+    userId: { 
       type: Schema.Types.ObjectId, 
-      ref: 'users' },
+      ref: 'users',
+      required: true,
+    },
   },
   {
     timestamps: true,

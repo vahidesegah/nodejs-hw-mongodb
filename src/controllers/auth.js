@@ -5,18 +5,20 @@ import { logoutUser } from '../services/auth.js';
 import { refreshUsersSession } from '../services/auth.js';
 
 export const registerUserController = async (req, res) => {
-  const user = await registerUser(req.body);
+  const userData = req.body;
+  const newUser = await registerUser(userData);
 
   res.status(201).json({
     status: 201,
     message: 'Successfully registered a user!',
-    data: user,
+    data: newUser,
   });
 };
 
 export const loginUserController = async (req, res) => {
   const session = await loginUser(req.body);
 
+  // İstek atan taraf refreshtoken ve sessionId görebilecek
   res.cookie('refreshToken', session.refreshToken, {
     httpOnly: true,
     expires: new Date(Date.now() + ONE_DAY),
@@ -26,6 +28,7 @@ export const loginUserController = async (req, res) => {
     expires: new Date(Date.now() + ONE_DAY),
   });
 
+  // Kullanıcı sadece accessToken görecek
   res.json({
     status: 200,
     message: 'Successfully logged in an user!',
@@ -43,9 +46,12 @@ export const logoutUserController = async (req, res) => {
   res.clearCookie('sessionId');
   res.clearCookie('refreshToken');
 
-  res.status(204).send();
+  res.status(200).send({
+    status: 200,
+    message: "Successfully logged out!",
+  });
 };
-
+  
 const setupSession = (res, session) => {
   res.cookie('refreshToken', session.refreshToken, {
     httpOnly: true,
@@ -67,9 +73,10 @@ export const refreshUserSessionController = async (req, res) => {
 
   res.json({
     status: 200,
-    message: 'Successfully refreshed a session!',
+    message: 'Successfully refreshed session!',
     data: {
       accessToken: session.accessToken,
     },
   });
 };
+
