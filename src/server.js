@@ -41,4 +41,3 @@ app.use(errorHandler);
 
 };
 
-setupServer();
