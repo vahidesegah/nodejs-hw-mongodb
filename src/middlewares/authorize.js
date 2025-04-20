@@ -11,8 +11,8 @@ Token ın süresi dolmuş mu?
     Token geçerli ise next()   */
 
 import createHttpError from "http-errors";
-import UsersCollection from "../models/user.js";
-import SessionsCollection from "../models/session.js";
+import { UsersCollection } from "../models/user.js";
+import { SessionsCollection } from "../models/session.js";
 
 
 
@@ -24,10 +24,10 @@ export const authorize = async (req, res, next) => {
     if (!authorization) {
         next(createHttpError(401, 'Authorization header is missing'));
         return;
-    }
+    } 
 
-    const bearer = authorization.split("")[0];
-    const token = authorization.split(" ")[1];
+    const bearer = authorization.split(' ')[0];
+    const token = authorization.split(' ')[1];
 
     if (bearer !== "Bearer" || !token) {
         next(createHttpError(401, "Invalid Token Format!"));
