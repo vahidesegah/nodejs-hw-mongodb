@@ -17,9 +17,11 @@ userAuthRouter.post('/register',  validateBody(registerUserSchema),  ctrlWrapper
 // /auth/login
 userAuthRouter.post('/login',  validateBody(loginUserSchema),  ctrlWrapper(loginUserController));
 
-userAuthRouter.post('/logout', ctrlWrapper(logoutUserController));
-
+// /auth/refresh
 userAuthRouter.post('/refresh', ctrlWrapper(refreshUserSessionController));
+
+// /auth/logout
+userAuthRouter.post('/logout', ctrlWrapper(logoutUserController));
 
 
 export default userAuthRouter;
