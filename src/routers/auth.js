@@ -9,16 +9,16 @@ import { logoutUserController } from '../controllers/auth.js';
 import { refreshUserSessionController } from '../controllers/auth.js';
 
 
-const UserRouter = Router();
+const UserAuthRouter = Router();
 
 // /auth/register anlamına geliyor
-UserRouter.post('/register',  validateBody(registerUserSchema),  ctrlWrapper(registerUserController));
+UserAuthRouter.post('/register',  validateBody(registerUserSchema),  ctrlWrapper(registerUserController));
 
-UserRouter.post('/login',  validateBody(loginUserSchema),  ctrlWrapper(loginUserController));
+UserAuthRouter.post('/login',  validateBody(loginUserSchema),  ctrlWrapper(loginUserController));
 
-UserRouter.post('/logout', ctrlWrapper(logoutUserController));
+UserAuthRouter.post('/logout', ctrlWrapper(logoutUserController));
 
-UserRouter.post('/refresh', ctrlWrapper(refreshUserSessionController));
+UserAuthRouter.post('/refresh', ctrlWrapper(refreshUserSessionController));
 
 
-export default UserRouter;
+export default UserAuthRouter;
