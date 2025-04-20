@@ -14,6 +14,7 @@ const userAuthRouter = Router();
 // /auth/register anlamına geliyor
 userAuthRouter.post('/register',  validateBody(registerUserSchema),  ctrlWrapper(registerUserController));
 
+// /auth/login
 userAuthRouter.post('/login',  validateBody(loginUserSchema),  ctrlWrapper(loginUserController));
 
 userAuthRouter.post('/logout', ctrlWrapper(logoutUserController));
