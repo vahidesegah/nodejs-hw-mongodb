@@ -1,5 +1,5 @@
 import bcrypt from 'bcrypt';
-import { UsersCollection } from '../db/models/user.js';
+import { UsersCollection } from '../models/user.js';
 import createHttpError from 'http-errors';
 import { randomBytes } from 'crypto';
 import { FIFTEEN_MINUTES, ONE_DAY } from '../constants/index.js';
@@ -7,7 +7,7 @@ import { SessionsCollection } from '../models/session.js';
 
 
 export const registerUser = async (userData) => {
-  const user = await UsersCollection.findOne({ email: payload.email });
+  const user = await UsersCollection.findOne({ email: userData.email });
   if (user) throw createHttpError(409, 'Email in use');
   
  // const encryptedPassword = await bcrypt.hash(payload.password, 10);
