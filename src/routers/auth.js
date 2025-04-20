@@ -11,6 +11,7 @@ import { refreshUserSessionController } from '../controllers/auth.js';
 
 const UserRouter = Router();
 
+// /auth/register anlamına geliyor
 UserRouter.post('/register',  validateBody(registerUserSchema),  ctrlWrapper(registerUserController));
 
 UserRouter.post('/login',  validateBody(loginUserSchema),  ctrlWrapper(loginUserController));
