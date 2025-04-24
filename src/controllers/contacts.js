@@ -52,6 +52,17 @@ export const getContactByIdController = async (req, res) => {
 
 export const createContactController = async (req, res) => {
   const contact = await createContact(req.body);
+
+  const photo = req.file;
+  let photoUrl = null;
+
+  if (photo) {
+    const { filename } = photo;
+    const fileUrl = `${process.env.APP_DOMAIN}/uploads/${filename}`;
+    photoUrl = fileUrl;
+  }
+  
+  //ekleyeceğiz
   
   try {
     await createContactSchema.validateAsync(contact, {
