@@ -59,12 +59,13 @@ export const createContactController = async (req, res) => {
   let photoUrl = null;
 
   if (photo) {
-    const { filename } = photo;
-    const fileUrl = `${process.env.APP_DOMAIN}/uploads/${filename}`;
-    photoUrl = fileUrl;
+    photoUrl = await saveFileToUploadDir(photo);
   }
   
-  //ekleyeceğiz
+  const createdContact = await createContact({
+    ...contact,
+    photo: photoUrl,
+  });
   
   try {
     await createContactSchema.validateAsync(contact, {
@@ -80,7 +81,7 @@ export const createContactController = async (req, res) => {
   res.status(201).json({
     status: 201,
     message: 'Successfully created a contact!',
-    data: contact,
+    data: createdContact,
   });
 };
 
@@ -92,7 +93,7 @@ export const patchContactController = async (req, res) => {
   let photoUrl;
 
   if (photo) {
-    if (env('ENABLE_CLOUDINARY') === 'true') {
+    if (process.env['ENABLE_CLOUDINARY'] === 'true') {
       photoUrl = await saveFileToCloudinary(photo);
     } else {
       photoUrl = await saveFileToUploadDir(photo);

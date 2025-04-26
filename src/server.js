@@ -25,7 +25,7 @@ export const setupServer = () => {
   app.use(cookieParser());
   app.use(`/uploads`, express.static(UPLOAD_DIR));
 
-const PORT = Number(env('PORT', '5000'));
+const PORT = Number(process.env['PORT', '5000']);
 
 
 app.use("/contacts", contactsRouter);
