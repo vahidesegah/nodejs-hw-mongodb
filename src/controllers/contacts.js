@@ -93,7 +93,7 @@ export const patchContactController = async (req, res) => {
   let photoUrl;
 
   if (photo) {
-    if (process.env['ENABLE_CLOUDINARY'] === 'true') {
+    if (env('ENABLE_CLOUDINARY') === 'true') {
       photoUrl = await saveFileToCloudinary(photo);
     } else {
       photoUrl = await saveFileToUploadDir(photo);

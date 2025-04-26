@@ -9,7 +9,7 @@ export const SMTP = {
     SMTP_HOST: "smtp-relay.brevo.com",
     SMTP_PORT: "587",
     SMTP_USER: "8b109b001@smtp-brevo.com",
-    SMTP_PASSWORD: "xsmtpsib-fb82c1b2cbaee3dc9b7ebf08672d8eb12da656429d292fe3cce21737a134e333-K3mhnSFtIJxZL2NE",
+    SMTP_PASSWORD: "xsmtpsib-fb82c1b2cbaee3dc9b7ebf08672d8eb12da656429d292fe3cce21737a134e333-tPjxdYWL1IrcU3Gk",
     SMTP_FROM: "vahidesegah@gmail.com",
 };
 

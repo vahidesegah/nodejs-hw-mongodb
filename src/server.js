@@ -1,7 +1,7 @@
 import express from 'express';
 import pino from 'pino-http';
 import cors from 'cors';
-import { env } from './env.js';
+import { env } from '../src/env.js';
 import contactsRouter from './routers/contacts.js';
 import userAuthRouter from './routers/auth.js';
 import { notFoundHandler } from './middlewares/notFoundHandler.js';
@@ -25,7 +25,7 @@ export const setupServer = () => {
   app.use(cookieParser());
   app.use(`/uploads`, express.static(UPLOAD_DIR));
 
-const PORT = Number(process.env['PORT']);
+const PORT = Number(env('PORT'));
 
 
 app.use("/contacts", contactsRouter);
