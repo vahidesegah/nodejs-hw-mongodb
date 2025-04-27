@@ -30,7 +30,6 @@ userAuthRouter.post('/logout', ctrlWrapper(logoutUserController));
 // /auth/request-reset-email
 userAuthRouter.post("/request-reset-email", validateBody(requestResetEmailSchema), ctrlWrapper(requestResetEmailController),
 );
-
 // /auth/reset-password
 userAuthRouter.post('/reset-password', validateBody(resetPasswordSchema), ctrlWrapper(resetPasswordController),
 );
