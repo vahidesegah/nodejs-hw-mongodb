@@ -21,6 +21,8 @@ export const generateAuthUrl = () =>
     ],
   });
 
+
+  // Aşağıdaki iki fonksiyonu hoca tek fonksiyonda yazdı 
 export const validateCode = async (code) => {
   const response = await googleOAuthClient.getToken(code);
   if (!response.tokens.id_token) throw createHttpError(401, 'Invalid Token!');
@@ -41,3 +43,4 @@ export const getFullNameFromGoogleTokenPayload = (payload) => {
 
   return fullName;
 };
+

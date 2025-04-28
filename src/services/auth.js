@@ -167,11 +167,11 @@ export const resetPassword = async (payload) => {
 export const loginOrSignupWithGoogle = async (code) => {
   const loginTicket = await validateCode(code);
   const payload = loginTicket.getPayload();
-  if (!payload) throw createHttpError(401);
+  if (!payload) throw createHttpError(401); // bu email ile kullanıcı yoksa 401 dön
 
-  let user = await UsersCollection.findOne({ email: payload.email });
+  let user = await UsersCollection.findOne({ email: payload.email }); 
   if (!user) {
-    const password = await bcrypt.hash(randomBytes(10), 10);
+    const password = await bcrypt.hash(randomBytes(10), 10); // bu email ile kullanıcı yoksa yarat yani register
     user = await UsersCollection.create({
       email: payload.email,
       name: getFullNameFromGoogleTokenPayload(payload),
