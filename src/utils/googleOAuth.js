@@ -32,7 +32,6 @@ export const validateCode = async (code) => {
   });
   return ticket;
 };
-
 export const getFullNameFromGoogleTokenPayload = (payload) => {
   let fullName = 'Guest';
   if (payload.given_name && payload.family_name) {
