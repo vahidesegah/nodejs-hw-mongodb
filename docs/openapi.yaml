@@ -13,7 +13,7 @@ tags:
     description: Operations about contacts.
 servers:
   - url: http://localhost:5000
-  - url: https://contacts-app-swagger-z45b.onrender.com
+  - url: https://api.example.com/v1
 paths:
   /contacts:
     get:
@@ -22,12 +22,12 @@ paths:
       $ref: '../swagger/paths/contacts/post.yaml'
   /contacts/{id}:
     get:
-      $ref: '../swagger/paths/contacts/{id}/get.yaml'
+      $ref: '../swagger/paths/{id}/get.yaml'
     patch:
-      $ref: '../swagger/paths/contacts/{id}/patch.yaml'
+      $ref: '../swagger/paths/{id}/patch.yaml'
     delete:
-      $ref: '../swagger/paths/contacts/{id}/delete.yaml'
-
+      $ref: '../swagger/paths/{id}/delete.yaml'
+components:
   securitySchemes:
     bearerAuth:
       type: http
