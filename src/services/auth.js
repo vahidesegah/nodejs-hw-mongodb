@@ -4,6 +4,13 @@ import createHttpError from 'http-errors';
 import { randomBytes } from 'crypto';
 import { FIFTEEN_MINUTES, ONE_DAY } from '../constants/index.js';
 import { SessionsCollection } from '../models/session.js';
+import jwt from 'jsonwebtoken';
+import { SMTP } from "../constants/index.js";
+import { sendEmail } from "../utils/sendMail.js";
+import handlebars from 'handlebars';
+import path from 'node:path';
+import fs from 'node:fs/promises';
+import { getFullNameFromGoogleTokenPayload, validateCode } from '../utils/googleOAuth.js';
 
 
 export const registerUser = async (userData) => {
@@ -86,6 +93,97 @@ export const refreshUsersSession = async ({ sessionId, refreshToken }) => {
 
   return await SessionsCollection.create({
     userId: session.userId,
+    ...newSession,
+  });
+};
+
+
+export const requestResetToken = async (email) => {
+  const user = await UsersCollection.findOne({ email });
+  if (!user) {
+    throw createHttpError(404, 'User not found');
+  }
+  const resetToken = jwt.sign(
+    {
+      sub: user._id,
+      email,
+    },
+    process.env['JWT_SECRET'],
+    {
+      expiresIn: '15m',
+    },
+  );
+const TEMPLATES_DIR = path.join(process.cwd(), 'src', 'templates');
+  const resetPasswordTemplatePath = path.join(
+    TEMPLATES_DIR,
+    'reset-password-email.html',
+  );
+
+  const templateSource = (
+    await fs.readFile(resetPasswordTemplatePath)
+  ).toString();
+
+  const template = handlebars.compile(templateSource);
+  const html = template({
+    name: user.name,
+    link: `${process.env['APP_DOMAIN']}/reset-password?token=${resetToken}`,
+  });
+
+  await sendEmail({
+    from: process.env[SMTP.SMTP_FROM],
+    to: email,
+    subject: 'Reset your password',
+    html,
+  });
+};
+
+export const resetPassword = async (payload) => {
+  let entries;
+
+  try {
+    entries = jwt.verify(payload.token, process.env['JWT_SECRET']);
+  } catch (err) {
+    if (err instanceof Error) throw createHttpError(401, err.message);
+    throw err;
+  }
+
+  const user = await UsersCollection.findOne({
+    email: entries.email,
+    _id: entries.sub,
+  });
+
+  if (!user) {
+    throw createHttpError(404, 'User not found');
+  }
+
+  const encryptedPassword = await bcrypt.hash(payload.password, 10);
+
+  await UsersCollection.updateOne(
+    { _id: user._id },
+    { password: encryptedPassword },
+  );
+};
+
+export const loginOrSignupWithGoogle = async (code) => {
+  const loginTicket = await validateCode(code);
+  const payload = loginTicket.getPayload();
+  if (!payload) throw createHttpError(401); // bu email ile kullanıcı yoksa 401 dön
+
+  let user = await UsersCollection.findOne({ email: payload.email }); 
+  if (!user) {
+    const password = await bcrypt.hash(randomBytes(10), 10); // bu email ile kullanıcı yoksa yarat yani register
+    user = await UsersCollection.create({
+      email: payload.email,
+      name: getFullNameFromGoogleTokenPayload(payload),
+      password,
+      role: 'parent',
+    });
+  }
+
+  const newSession = createSession();
+
+  return await SessionsCollection.create({
+    userId: user._id,
     ...newSession,
   });
 };
