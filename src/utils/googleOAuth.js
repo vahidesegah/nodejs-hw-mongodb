@@ -1,18 +1,20 @@
 
 import { OAuth2Client } from 'google-auth-library';
-import oauthConfig from "../../google-oauth.json";
+// import googleOAuthConfig from "../../google-oauth.json" with { type: "json" };;
 import path from 'node:path';
 import { readFile } from 'fs/promises';
 import createHttpError from 'http-errors';
-import { ENV_VARS } from "../env.js";
+import { env } from "../env.js";
+
 
 const PATH_JSON = path.join(process.cwd(), 'google-oauth.json');
-const oauthConfig = JSON.parse(await readFile(PATH_JSON));
+const parsedOAuthConfig = JSON.parse(await readFile(PATH_JSON));
+
 
 const googleOAuthClient = new OAuth2Client({
-  clientId: process.env[ENV_VARS.GOOGLE_AUTH_CLIENT_ID],
-  clientSecret: process.env[ENV_VARS.GOOGLE_AUTH_CLIENT_SECRET],
-  redirectUri: oauthConfig.web.redirect_uris[0],
+  clientId: env(`GOOGLE_AUTH_CLIENT_ID`), // çevresel değişkenleri değiştiriyoruz
+  clientSecret: env(`GOOGLE_AUTH_CLIENT_SECRET`), // çevresel değişkenleri değiştiriyoruz
+  redirectUri: parsedOAuthConfig.web.redirect_uris[0],
 });
 
 export const generateAuthUrl = () =>
@@ -24,7 +26,7 @@ export const generateAuthUrl = () =>
   });
 
 
-  // Aşağıdaki iki fonksiyonu hoca tek fonksiyonda yazdı 
+  // Aşağıdaki iki fonksiyonu hoca tek fonksiyonda yazdı
 export const validateCode = async (code) => {
   const response = await googleOAuthClient.getToken(code);
   if (!response.tokens.id_token) throw createHttpError(401, 'Invalid Token!');

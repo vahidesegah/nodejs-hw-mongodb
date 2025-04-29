@@ -1,5 +1,5 @@
 import { LoginTicket } from 'google-auth-library';
-import { googleOAuthClient } from "./" // buranın import u ne olacak?
+import { googleOAuthClient } from  "./utils/googleOAuth.js"
 import createHttpError from 'http-errors';
 
 export const generateAuthUrl = (): string =>
@@ -17,4 +17,5 @@ export const generateAuthUrl = (): string =>
       idToken: response.tokens.id_token,
     });
     return ticket;
-  };
+};
+  
